@@ -1,0 +1,15 @@
+Build.PL
+Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+README
+SIGNATURE
+Todo
+dist.ini
+lib/Module/Build/Tiny.pm
+t/00-compile.t
+t/lib/DistGen.pm
+t/release-pod-syntax.t
+t/simple.t

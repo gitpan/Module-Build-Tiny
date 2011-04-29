@@ -1,0 +1,67 @@
+{
+   "abstract" : "A tiny replacement for Module::Build",
+   "author" : [
+      "Leon Timmermans <fawaka@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.110580",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Module-Build-Tiny",
+   "prereqs" : {
+      "runtime" : {
+         "requires" : {
+            "CPAN::Meta" : 0,
+            "Exporter" : "5.57",
+            "ExtUtils::BuildRC" : 0,
+            "ExtUtils::Helpers" : 0,
+            "ExtUtils::Install" : 0,
+            "ExtUtils::InstallPaths" : 0,
+            "File::Find::Rule" : 0,
+            "File::Path" : 0,
+            "File::Slurp" : 0,
+            "File::Spec::Functions" : 0,
+            "Getopt::Long" : 0,
+            "JSON::PP" : 0,
+            "TAP::Harness" : 0,
+            "perl" : "5.008"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Capture::Tiny" : 0,
+            "Carp" : 0,
+            "Config" : 0,
+            "Cwd" : 0,
+            "Data::Dumper" : 0,
+            "File::Basename" : 0,
+            "File::Find" : 0,
+            "File::Spec" : 0,
+            "File::Temp" : 0,
+            "File::pushd" : "1.00",
+            "IO::File" : 0,
+            "Test::More" : "0.86",
+            "vars" : 0
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-module-build-tiny at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny"
+      },
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/Leont/module-build-tiny.git",
+         "web" : "http://github.com/Leont/module-build-tiny"
+      }
+   },
+   "version" : "0.006"
+}
+

@@ -4,7 +4,7 @@
       "Leon Timmermans <fawaka@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.110580",
+   "generated_by" : "Dist::Zilla version 4.200006, CPAN::Meta::Converter version 2.110580",
    "license" : [
       "perl_5"
    ],
@@ -14,6 +14,24 @@
    },
    "name" : "Module-Build-Tiny",
    "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "CPAN::Meta" : 0,
+            "Exporter" : "5.57",
+            "ExtUtils::BuildRC" : 0,
+            "ExtUtils::Helpers" : 0,
+            "ExtUtils::Install" : 0,
+            "ExtUtils::InstallPaths" : 0,
+            "File::Find::Rule" : 0,
+            "File::Path" : 0,
+            "File::Slurp" : 0,
+            "File::Spec::Functions" : 0,
+            "Getopt::Long" : 0,
+            "JSON::PP" : 0,
+            "TAP::Harness" : 0,
+            "perl" : "5.008"
+         }
+      },
       "runtime" : {
          "requires" : {
             "CPAN::Meta" : 0,
@@ -62,6 +80,6 @@
          "web" : "http://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.006"
+   "version" : "0.007"
 }
 

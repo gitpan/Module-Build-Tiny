@@ -1,3 +1,3 @@
 use lib 'lib';
-use Module::Build::Tiny 0.001;
+use Module::Build::Tiny ;
 Build_PL(@ARGV);

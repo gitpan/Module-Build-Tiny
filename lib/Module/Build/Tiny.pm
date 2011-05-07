@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 BEGIN {
-  $Module::Build::Tiny::VERSION = '0.007';
+  $Module::Build::Tiny::VERSION = '0.008';
 }
 use strict;
 use warnings;
@@ -8,16 +8,15 @@ use Exporter 5.57 'import';
 our @EXPORT  = qw/Build Build_PL/;
 
 use CPAN::Meta;
-use ExtUtils::BuildRC qw/read_config/;
-use ExtUtils::Helpers qw/make_executable split_like_shell build_script manify man1_pagename man3_pagename/;
+use ExtUtils::BuildRC 0.003 qw/read_config/;
+use ExtUtils::Helpers 0.007 qw/make_executable split_like_shell build_script manify man1_pagename man3_pagename/;
 use ExtUtils::Install qw/pm_to_blib install/;
 use ExtUtils::InstallPaths;
-use File::Path qw/rmtree/;
 use File::Find::Rule qw/find/;
 use File::Slurp qw/read_file write_file/;
 use File::Spec::Functions qw/catfile catdir rel2abs/;
 use Getopt::Long qw/GetOptions/;
-use JSON::PP qw/encode_json decode_json/;
+use JSON::PP 2 qw/encode_json decode_json/;
 use TAP::Harness;
 
 my ($metafile) = grep { -e $_ } qw/META.json META.yml/ or die "No META information provided\n";
@@ -31,6 +30,7 @@ sub _build {
 	make_executable($_) for find(file => in => catdir(qw/blib script/));
 	manify($_, catdir('blib', 'bindoc', man1_pagename($_)), 1, \%opt) for @scripts;
 	manify($_, catdir('blib', 'libdoc', man3_pagename($_)), 3, \%opt) for @modules;
+	chmod +(stat $_)[2] & ~0222, $_ for map { catfile('blib', $_) } @scripts, @modules;
 }
 
 my %actions = (
@@ -46,14 +46,6 @@ my %actions = (
 		_build(%opt);
 		my $paths = ExtUtils::InstallPaths->new(%opt, module_name => $meta->name);
 		install($paths->install_map, @opt{'verbose', 'dry_run', 'uninst'});
-	},
-	clean => sub {
-		my %opt = @_;
-		rmtree('blib', $opt{verbose});
-	},
-	realclean => sub {
-		my %opt = @_;
-		rmtree($_, $opt{verbose}) for qw/blib Build _build_params MYMETA.yml MYMETA.json/;
 	},
 );
 

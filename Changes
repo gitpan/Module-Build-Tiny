@@ -1,5 +1,9 @@
 Revision history for Module::Build::Tiny
 
+0.008     2011-05-07 11:25:39 Europe/Amsterdam
+          Removed clean and realclean commands
+          Fix writability for scripts and modules
+
 0.007     2011-05-01 22:36:17 Europe/Bucharest
           Now with corrent configure-requires meta-information
 

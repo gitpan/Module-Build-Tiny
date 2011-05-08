@@ -23,12 +23,12 @@ configure_requires:
   ExtUtils::BuildRC: 0.003
   ExtUtils::Helpers: 0.007
   ExtUtils::Install: 0
-  ExtUtils::InstallPaths: 0
+  ExtUtils::InstallPaths: 0.002
   File::Find::Rule: 0
   File::Slurp: 0
   File::Spec::Functions: 0
   Getopt::Long: 0
-  JSON::PP: 2
+  JSON: 2
   TAP::Harness: 0
   perl: 5.008
 dynamic_config: 0
@@ -44,15 +44,15 @@ requires:
   ExtUtils::BuildRC: 0.003
   ExtUtils::Helpers: 0.007
   ExtUtils::Install: 0
-  ExtUtils::InstallPaths: 0
+  ExtUtils::InstallPaths: 0.002
   File::Find::Rule: 0
   File::Slurp: 0
   File::Spec::Functions: 0
   Getopt::Long: 0
-  JSON::PP: 2
+  JSON: 2
   TAP::Harness: 0
   perl: 5.008
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.008
+version: 0.009

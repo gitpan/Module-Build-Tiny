@@ -21,12 +21,12 @@
             "ExtUtils::BuildRC" : "0.003",
             "ExtUtils::Helpers" : "0.007",
             "ExtUtils::Install" : 0,
-            "ExtUtils::InstallPaths" : 0,
+            "ExtUtils::InstallPaths" : "0.002",
             "File::Find::Rule" : 0,
             "File::Slurp" : 0,
             "File::Spec::Functions" : 0,
             "Getopt::Long" : 0,
-            "JSON::PP" : "2",
+            "JSON" : "2",
             "TAP::Harness" : 0,
             "perl" : "5.008"
          }
@@ -38,12 +38,12 @@
             "ExtUtils::BuildRC" : "0.003",
             "ExtUtils::Helpers" : "0.007",
             "ExtUtils::Install" : 0,
-            "ExtUtils::InstallPaths" : 0,
+            "ExtUtils::InstallPaths" : "0.002",
             "File::Find::Rule" : 0,
             "File::Slurp" : 0,
             "File::Spec::Functions" : 0,
             "Getopt::Long" : 0,
-            "JSON::PP" : "2",
+            "JSON" : "2",
             "TAP::Harness" : 0,
             "perl" : "5.008"
          }
@@ -79,6 +79,6 @@
          "web" : "http://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.008"
+   "version" : "0.009"
 }
 

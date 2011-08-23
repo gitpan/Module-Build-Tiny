@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.63.
+signed via the Module::Signature module, version 0.68.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,25 +15,25 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 86b7920a58156dab49827dc78c7bbe24e0341969 Build.PL
-SHA1 3a7a648b86cc2d722b6420d3068a416e356c6819 Changes
-SHA1 5ecf683d0174af998b9e210d58e137e1c95448aa LICENSE
+SHA1 520d9ac3ff2797de2351258ee45285d18443ed50 Changes
+SHA1 4dde25b9538eaab37558ffc59119b7e8e26e47af LICENSE
 SHA1 1d00253989fd1831c5f0f9dd5ac5f4bdcd6113e5 MANIFEST
-SHA1 7869a469b90037233cf0173e67414ad3cf09d63b META.json
-SHA1 e08e86bf954ce4e8afc28c54ec0b6e8dd1c782c5 META.yml
-SHA1 363208af539836825a10fd111143e1f37f54fd68 README
+SHA1 4379a685f2e8d6b4bf4d394c868ff33a29836c65 META.json
+SHA1 65e045421711f30b90ee630c3934a7f064c09a75 META.yml
+SHA1 3f30c3782e8d597ef6c1109fd60db8d8b0d7001c README
 SHA1 60d45974d3038530f9d9415e1cc01470f1e13252 Todo
 SHA1 11825398415371865d21f1befdd78704365f6be2 dist.ini
-SHA1 f9b05349d621780becd6393971ce393d1bb579ff lib/Module/Build/Tiny.pm
-SHA1 9e65f3976c7c7eabaeab878d513ff95b38a07776 t/00-compile.t
-SHA1 643a97a6bcfb11a065f840321a7d278fc0959db6 t/lib/DistGen.pm
+SHA1 530cff94b6207643e9d4e98b28c29202e9385e37 lib/Module/Build/Tiny.pm
+SHA1 ca41ffd5806caaf9da5dceea1320ae662780e9fc t/00-compile.t
+SHA1 aa8355b1fcee336e4e21cfcef2a70d72a76f9686 t/lib/DistGen.pm
 SHA1 961a1e2c92d836c8cad2d34b784cbc75345dec63 t/release-kwalitee.t
 SHA1 9433c240fe590bc404ab68ff63984df763e347ed t/release-pod-coverage.t
 SHA1 b30cbdfaf935017c4568c0c91b242438cb87786e t/release-pod-syntax.t
 SHA1 ef1da6a01a5ebc4fd6ca00d2b6abbe6b682ca41a t/simple.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAk3GatMACgkQTd+EWiaICwqZBgCaA3zCElWZDdr8zSLO6rlIDB99
-N5cAmwe30/8MkgeYZGsgRWiGoXszymFy
-=xT4o
+iEYEARECAAYFAk5T53oACgkQTd+EWiaICwpnoQCg0qm00fpY/mlAlt3TClUDg7BH
+It4AoNGNWyjfw3M5VLgOkE4qSL/Ec6Zm
+=v/rK
 -----END PGP SIGNATURE-----

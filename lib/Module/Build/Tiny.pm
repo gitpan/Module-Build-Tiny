@@ -1,11 +1,11 @@
 package Module::Build::Tiny;
 BEGIN {
-  $Module::Build::Tiny::VERSION = '0.009';
+  $Module::Build::Tiny::VERSION = '0.010';
 }
 use strict;
 use warnings;
 use Exporter 5.57 'import';
-our @EXPORT  = qw/Build Build_PL/;
+our @EXPORT = qw/Build Build_PL/;
 
 use CPAN::Meta;
 use ExtUtils::BuildRC 0.003 qw/read_config/;
@@ -22,35 +22,35 @@ use TAP::Harness;
 my ($metafile) = grep { -e $_ } qw/META.json META.yml/ or die "No META information provided\n";
 my $meta = CPAN::Meta->load_file($metafile);
 
-sub _build {
-	my %opt = @_;
-	my @modules = find(file => name => [qw/*.pm *.pod/], in => 'lib');
-	my @scripts = find(file => name => '*', in => 'script');
-	pm_to_blib({ map { $_ => catfile('blib', $_) } @modules, @scripts }, catdir(qw/blib lib auto/));
-	make_executable($_) for find(file => in => catdir(qw/blib script/));
-	manify($_, catdir('blib', 'bindoc', man1_pagename($_)), 1, \%opt) for @scripts;
-	manify($_, catdir('blib', 'libdoc', man3_pagename($_)), 3, \%opt) for @modules;
-	chmod +(stat $_)[2] & ~0222, $_ for map { catfile('blib', $_) } @scripts, @modules;
-}
-
 my %actions = (
-	build => \&_build,
-	test  => sub {
+	build => sub {
 		my %opt = @_;
-		_build(%opt);
+		system($^X, $_) and die "$_ returned $?\n" for find(file => name => '*.PL', in => 'lib');
+		my %modules = map { $_ => catfile('blib', $_) } find(file => name => [qw/*.pm *.pod/], in => 'lib');
+		my %scripts = map { $_ => catfile('blib', $_) } find(file => name => '*', in => 'script');
+		pm_to_blib({ %modules, %scripts }, catdir(qw/blib lib auto/));
+		make_executable($_) for values %scripts;
+		manify($_, catfile('blib', 'bindoc', man1_pagename($_)), 1, \%opt) for keys %scripts;
+		manify($_, catfile('blib', 'libdoc', man3_pagename($_)), 3, \%opt) for keys %modules;
+		chmod oct 444, $_ for values %modules;
+		chmod oct 555, $_ for values %scripts;
+	},
+	test => sub {
+		my %opt = @_;
+		die "Must run `./Build build` first\n" if not -d 'blib';
 		my $tester = TAP::Harness->new({verbosity => $opt{verbose}, lib => rel2abs(catdir(qw/blib lib/)), color => -t STDOUT});
 		$tester->runtests(sort +find(file => name => '*.t', in => 't'))->has_errors and exit 1;
 	},
 	install => sub {
 		my %opt = @_;
-		_build(%opt);
+		die "Must run `./Build build` first\n" if not -d 'blib';
 		my $paths = ExtUtils::InstallPaths->new(%opt, dist_name => $meta->name);
-		install($paths->install_map, @opt{'verbose', 'dry_run', 'uninst'});
+		install($paths->install_map, @opt{qw/verbose dry_run uninst/});
 	},
 );
 
 sub Build {
-	my $bpl    = decode_json(read_file('_build_params'));
+	my $bpl = decode_json(read_file('_build_params'));
 	my $action = @ARGV && $ARGV[0] =~ /\A\w+\z/ ? shift @ARGV : 'build';
 	die "No such action '$action'\n" if not $actions{$action};
 	my $rc_opts = read_config();
@@ -90,33 +90,44 @@ to drive distribution configuration, build, test and installation.
 Traditionally, Build.PL uses Module::Build as the underlying build system.
 This module provides a simple, lightweight, drop-in replacement.
 
-Whereas Module::Build has over 6,700 lines of code; this module has under
-100, yet supports the features needed by most pure-Perl distributions.
+Whereas Module::Build has over 6,700 lines of code; this module has less
+than 70, yet supports the features needed by most pure-Perl distributions.
 
 =head2 Supported
 
-  * Pure Perl distributions
-  * Recursive test files
-  * MYMETA
-  * Man page generation
+=over 4
+
+=item * Pure Perl distributions
+
+=item * Recursive test files
+
+=item * MYMETA
+
+=item * Man page generation
+
+=item * Generated code from PL files
+
+=back
 
 =head2 Not Supported
 
-  * Dynamic prerequisites
-  * Generated code from PL files
-  * Building XS or C
-  * HTML documentation generation
-  * Extending Module::Build::Tiny
+=over 4
 
-=head2 Other limitations
+=item * Dynamic prerequisites
 
-  * This is an experimental module -- use at your own risk
+=item * Building XS or C
+
+=item * HTML documentation generation
+
+=item * Extending Module::Build::Tiny
+
+=back
 
 =head2 Directory structure
 
 Your .pm and .pod files must be in F<lib/>.  Any executables must be in
-F<script/>.  Test files must be in F<t/>.  Bundled test modules must be in
-F<t/lib/>.
+F<script/>.  Test files must be in F<t/>.
+
 
 =head1 USAGE
 
@@ -147,10 +158,6 @@ This supports the following options:
 =item * uninst
 
 =back
-
-=head2 Build clean
-
-=head2 Build realclean
 
 =head1 AUTHORING
 
@@ -183,5 +190,7 @@ at your option, any later version of Perl 5 you may have available.
 =for Pod::Coverage
 Build_PL
 =end
+
+=cut
 
 # vi:et:sts=2:sw=2:ts=2

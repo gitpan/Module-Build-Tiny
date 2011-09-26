@@ -1,7 +1,8 @@
 ---
 abstract: 'A tiny replacement for Module::Build'
 author:
-  - 'Leon Timmermans <fawaka@gmail.com>'
+  - 'Leon Timmermans <leont@cpan.org>'
+  - 'David Golden <dagolden@cpan.org>'
 build_requires:
   Capture::Tiny: 0
   Carp: 0
@@ -15,13 +16,14 @@ build_requires:
   File::Temp: 0
   File::pushd: 1.00
   IO::File: 0
-  Test::More: 0.86
-  vars: 0
+  Test::Exception: 0
+  Test::More: 0.88
 configure_requires:
   CPAN::Meta: 0
   Exporter: 5.57
   ExtUtils::BuildRC: 0.003
-  ExtUtils::Helpers: 0.007
+  ExtUtils::Config: 0.003
+  ExtUtils::Helpers: 0.010
   ExtUtils::Install: 0
   ExtUtils::InstallPaths: 0.002
   File::Find::Rule: 0
@@ -31,8 +33,10 @@ configure_requires:
   JSON: 2
   TAP::Harness: 0
   perl: 5.008
+  strict: 0
+  warnings: 0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200008, CPAN::Meta::Converter version 2.110440'
+generated_by: 'Dist::Zilla version 4.300000, CPAN::Meta::Converter version 2.110440'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -42,7 +46,8 @@ requires:
   CPAN::Meta: 0
   Exporter: 5.57
   ExtUtils::BuildRC: 0.003
-  ExtUtils::Helpers: 0.007
+  ExtUtils::Config: 0.003
+  ExtUtils::Helpers: 0.010
   ExtUtils::Install: 0
   ExtUtils::InstallPaths: 0.002
   File::Find::Rule: 0
@@ -52,7 +57,9 @@ requires:
   JSON: 2
   TAP::Harness: 0
   perl: 5.008
+  strict: 0
+  warnings: 0
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.010
+version: 0.011

@@ -1,5 +1,8 @@
 Revision history for Module::Build::Tiny
 
+0.011     2011-09-26 15:56:28 Europe/Amsterdam
+          Fix Module::Build::Tiny on Windows
+
 0.010     2011-08-23 19:46:29 Europe/Amsterdam
           Don't let the test and install actions depend on build (was rather broken)
           Add support for *.PL files

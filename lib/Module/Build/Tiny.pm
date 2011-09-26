@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
-BEGIN {
-  $Module::Build::Tiny::VERSION = '0.010';
+{
+  $Module::Build::Tiny::VERSION = '0.011';
 }
 use strict;
 use warnings;
@@ -9,7 +9,8 @@ our @EXPORT = qw/Build Build_PL/;
 
 use CPAN::Meta;
 use ExtUtils::BuildRC 0.003 qw/read_config/;
-use ExtUtils::Helpers 0.007 qw/make_executable split_like_shell build_script manify man1_pagename man3_pagename/;
+use ExtUtils::Config 0.003;
+use ExtUtils::Helpers 0.010 qw/make_executable split_like_shell build_script manify man1_pagename man3_pagename/;
 use ExtUtils::Install qw/pm_to_blib install/;
 use ExtUtils::InstallPaths 0.002;
 use File::Find::Rule qw/find/;
@@ -25,15 +26,16 @@ my $meta = CPAN::Meta->load_file($metafile);
 my %actions = (
 	build => sub {
 		my %opt = @_;
-		system($^X, $_) and die "$_ returned $?\n" for find(file => name => '*.PL', in => 'lib');
+		system $^X, $_ and die "$_ returned $?\n" for find(file => name => '*.PL', in => 'lib');
 		my %modules = map { $_ => catfile('blib', $_) } find(file => name => [qw/*.pm *.pod/], in => 'lib');
 		my %scripts = map { $_ => catfile('blib', $_) } find(file => name => '*', in => 'script');
 		pm_to_blib({ %modules, %scripts }, catdir(qw/blib lib auto/));
 		make_executable($_) for values %scripts;
-		manify($_, catfile('blib', 'bindoc', man1_pagename($_)), 1, \%opt) for keys %scripts;
-		manify($_, catfile('blib', 'libdoc', man3_pagename($_)), 3, \%opt) for keys %modules;
-		chmod oct 444, $_ for values %modules;
-		chmod oct 555, $_ for values %scripts;
+
+		if ($opt{config}->exists('installman3dir')) {
+			manify($_, catfile('blib', 'bindoc', man1_pagename($_)), 1, \%opt) for keys %scripts;
+			manify($_, catfile('blib', 'libdoc', man3_pagename($_)), 3, \%opt) for keys %modules;
+		}
 	},
 	test => sub {
 		my %opt = @_;
@@ -72,11 +74,17 @@ sub Build_PL {
 
 1;
 
-__END__
+
+
+=pod
 
 =head1 NAME
 
 Module::Build::Tiny - A tiny replacement for Module::Build
+
+=head1 VERSION
+
+version 0.011
 
 =head1 SYNOPSIS
 
@@ -127,7 +135,6 @@ than 70, yet supports the features needed by most pure-Perl distributions.
 
 Your .pm and .pod files must be in F<lib/>.  Any executables must be in
 F<script/>.  Test files must be in F<t/>.
-
 
 =head1 USAGE
 
@@ -185,12 +192,37 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
 
-=cut
-
-=for Pod::Coverage
-Build_PL
+=for Pod::Coverage Build_PL
 =end
 
+=head1 AUTHORS
+
+=over 4
+
+=item *
+
+Leon Timmermans <leont@cpan.org>
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Leon Timmermans.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 =cut
+
+
+__END__
+
+#ABSTRACT: A tiny replacement for Module::Build
+
+
 
 # vi:et:sts=2:sw=2:ts=2

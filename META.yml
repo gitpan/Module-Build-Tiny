@@ -9,9 +9,7 @@ build_requires:
   Config: 0
   Cwd: 0
   Data::Dumper: 0
-  File::Basename: 0
   File::Find: 0
-  File::Path: 0
   File::Spec: 0
   File::Temp: 0
   File::pushd: 1.00
@@ -26,17 +24,19 @@ configure_requires:
   ExtUtils::Helpers: 0.010
   ExtUtils::Install: 0
   ExtUtils::InstallPaths: 0.002
+  File::Basename: 0
   File::Find::Rule: 0
+  File::Path: 0
   File::Slurp: 0
   File::Spec::Functions: 0
   Getopt::Long: 0
   JSON: 2
   TAP::Harness: 0
-  perl: 5.008
+  perl: 5.006
   strict: 0
   warnings: 0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300000, CPAN::Meta::Converter version 2.110440'
+generated_by: 'Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -50,16 +50,18 @@ requires:
   ExtUtils::Helpers: 0.010
   ExtUtils::Install: 0
   ExtUtils::InstallPaths: 0.002
+  File::Basename: 0
   File::Find::Rule: 0
+  File::Path: 0
   File::Slurp: 0
   File::Spec::Functions: 0
   Getopt::Long: 0
   JSON: 2
   TAP::Harness: 0
-  perl: 5.008
+  perl: 5.006
   strict: 0
   warnings: 0
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.011
+version: 0.012

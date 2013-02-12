@@ -6,13 +6,10 @@ MANIFEST
 META.json
 META.yml
 README
-SIGNATURE
 Todo
 dist.ini
 lib/Module/Build/Tiny.pm
 t/00-compile.t
 t/lib/DistGen.pm
-t/release-kwalitee.t
-t/release-pod-coverage.t
 t/release-pod-syntax.t
 t/simple.t

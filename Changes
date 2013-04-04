@@ -1,5 +1,11 @@
 Revision history for Module::Build::Tiny
 
+0.014     2013-04-04 15:58:50 Europe/Amsterdam
+          Added sharedir support
+          Fixed Synopsis [tokuhirom]
+          Make blib/arch, to satisfy blib.pm
+          Removed dependencies on Test::Exception, Capture::Tiny and File::Slurp
+
 0.013     2013-02-12 20:17:25 Europe/Amsterdam
           Detildefy input
 

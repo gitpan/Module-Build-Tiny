@@ -3,10 +3,9 @@ use strict;
 use warnings;
 use Config;
 use File::pushd 1.00 qw(tempd);
-use File::Spec 0 ();
-use Capture::Tiny 0 qw(capture);
+use File::Spec::Functions 0 qw/catdir catfile/;
+use IPC::Open2;
 use Test::More 0.88;
-use Test::Exception;
 use lib 't/lib';
 use DistGen qw/undent/;
 
@@ -16,6 +15,7 @@ use DistGen qw/undent/;
 
 my $dist = DistGen->new(name => 'Foo::Bar');
 $dist->chdir_in;
+$dist->add_file('share/file.txt', 'FooBarBaz');
 $dist->add_file('script/simple', undent(<<"    ---"));
     #!perl
     use Foo::Bar;
@@ -59,7 +59,9 @@ sub _slurp { do { local (@ARGV,$/)=$_[0]; <> } }
 #--------------------------------------------------------------------------#
 
 {
-  lives_ok { capture { system($^X, "Build") and die $! } } "Ran Build";
+  ok( open2(my($in, $out), $^X, 'Build'), 'Could run Build' );
+  my $output = do { local $/; <$in> };
+  like( $output, qr{lib/Foo/Bar\.pm}, 'Build output looks correctly');
   ok( -d 'blib',        "created blib" );
   ok( -d 'blib/lib',    "created blib/lib" );
   ok( -d 'blib/script', "created blib/script" );
@@ -85,6 +87,15 @@ sub _slurp { do { local (@ARGV,$/)=$_[0]; <> } }
     my $line = <$fh>;
     like( $line, qr{\A$interpreter}, "blib/script/simple has shebang line with \$^X" );
   }
+
+  if (eval { require File::ShareDir }) {
+	  require blib;
+	  blib->import;
+	  ok( -d File::ShareDir::dist_dir('Foo-Bar'), 'sharedir has been made');
+	  ok( -f File::ShareDir::dist_file('Foo-Bar', 'file.txt'), 'sharedir file has been made');
+  }
+  ok( -d catdir(qw/blib lib auto share dist Foo-Bar/), 'sharedir has been made');
+  ok( -f catfile(qw/blib lib auto share dist Foo-Bar file.txt/), 'sharedir file has been made');
 }
 
 done_testing;

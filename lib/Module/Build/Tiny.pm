@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.013';
+  $Module::Build::Tiny::VERSION = '0.014';
 }
 use strict;
 use warnings;
@@ -17,11 +17,21 @@ use File::Basename qw/dirname/;
 use File::Find::Rule qw/find/;
 use File::HomeDir;
 use File::Path qw/mkpath/;
-use File::Slurp qw/read_file write_file/;
-use File::Spec::Functions qw/catfile catdir rel2abs/;
+use File::Spec::Functions qw/catfile catdir rel2abs abs2rel/;
 use Getopt::Long qw/GetOptions/;
 use JSON 2 qw/encode_json decode_json/;
 use TAP::Harness;
+
+sub write_file {
+	my ($filename, $mode, $content) = @_;
+	open my $fh, ">:$mode", $filename or die "Could not open $filename: $!\n";;
+	print $fh $content;
+}
+sub read_file {
+	my ($filename, $mode) = @_;
+	open my $fh, "<:$mode", $filename or die "Could not open $filename: $!\n";
+	return do { local $/; <$fh> };
+}
 
 sub get_meta {
 	my ($metafile) = grep { -e $_ } qw/META.json META.yml/ or die "No META information provided\n";
@@ -47,8 +57,10 @@ my %actions = (
 		system $^X, $_ and die "$_ returned $?\n" for find(file => name => '*.PL', in => 'lib');
 		my %modules = map { $_ => catfile('blib', $_) } find(file => name => [qw/*.pm *.pod/], in => 'lib');
 		my %scripts = map { $_ => catfile('blib', $_) } find(file => name => '*', in => 'script');
-		pm_to_blib({ %modules, %scripts }, catdir(qw/blib lib auto/));
+		my %shared = map { $_ => catfile(qw/blib lib auto share dist/, $opt{meta}->name, abs2rel($_, 'share')) } find(file => name => '*', in => 'share');
+		pm_to_blib({ %modules, %scripts, %shared }, catdir(qw/blib lib auto/));
 		make_executable($_) for values %scripts;
+		mkpath(catdir(qw/blib arch/), $opt{verbose});
 
 		if ($opt{install_paths}->is_default_installable('libdoc')) {
 			manify($_, catfile('blib', 'bindoc', man1_pagename($_)), 1, \%opt) for keys %scripts;
@@ -69,7 +81,7 @@ my %actions = (
 );
 
 sub Build {
-	my $bpl = decode_json(read_file('_build_params'));
+	my $bpl = decode_json(read_file('_build_params', 'utf8'));
 	my $action = @ARGV && $ARGV[0] =~ /\A\w+\z/ ? shift @ARGV : 'build';
 	die "No such action '$action'\n" if not $actions{$action};
 	my $rc_opts = read_config();
@@ -85,9 +97,9 @@ sub Build_PL {
 	my $meta = get_meta();
 	printf "Creating new 'Build' script for '%s' version '%s'\n", $meta->name, $meta->version;
 	my $dir = $meta->name eq 'Module-Build-Tiny' ? 'lib' : 'inc';
-	write_file('Build', "#!perl\nuse lib '$dir';\nuse Module::Build::Tiny;\nBuild();\n");
+	write_file('Build', 'raw', "#!perl\nuse lib '$dir';\nuse Module::Build::Tiny;\nBuild();\n");
 	make_executable('Build');
-	write_file(qw/_build_params/, encode_json(\@ARGV));
+	write_file('_build_params', 'utf8', encode_json(\@ARGV));
 	$meta->save(@$_) for ['MYMETA.json'], ['MYMETA.yml' => { version => 1.4 }];
 }
 
@@ -107,12 +119,12 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 
  use Module::Build::Tiny;
- BuildPL();
+ Build_PL();
 
 =head1 DESCRIPTION
 
@@ -122,7 +134,7 @@ Traditionally, Build.PL uses Module::Build as the underlying build system.
 This module provides a simple, lightweight, drop-in replacement.
 
 Whereas Module::Build has over 6,700 lines of code; this module has less
-than 70, yet supports the features needed by most pure-Perl distributions.
+than 100, yet supports the features needed by most pure-Perl distributions.
 
 =head2 Supported
 

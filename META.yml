@@ -4,7 +4,6 @@ author:
   - 'Leon Timmermans <leont@cpan.org>'
   - 'David Golden <dagolden@cpan.org>'
 build_requires:
-  Capture::Tiny: 0
   Carp: 0
   Config: 0
   Cwd: 0
@@ -14,8 +13,9 @@ build_requires:
   File::Temp: 0
   File::pushd: 1.00
   IO::File: 0
-  Test::Exception: 0
+  IPC::Open2: 0
   Test::More: 0.88
+  blib: 0
 configure_requires:
   CPAN::Meta: 0
   Exporter: 5.57
@@ -28,7 +28,6 @@ configure_requires:
   File::Find::Rule: 0
   File::HomeDir: 0
   File::Path: 0
-  File::Slurp: 0
   File::Spec::Functions: 0
   Getopt::Long: 0
   JSON: 2
@@ -37,7 +36,7 @@ configure_requires:
   strict: 0
   warnings: 0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300031, CPAN::Meta::Converter version 2.130880'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -55,7 +54,6 @@ requires:
   File::Find::Rule: 0
   File::HomeDir: 0
   File::Path: 0
-  File::Slurp: 0
   File::Spec::Functions: 0
   Getopt::Long: 0
   JSON: 2
@@ -66,4 +64,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.013
+version: 0.014

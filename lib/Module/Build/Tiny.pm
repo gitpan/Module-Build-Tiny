@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.014';
+  $Module::Build::Tiny::VERSION = '0.015';
 }
 use strict;
 use warnings;
@@ -8,18 +8,16 @@ use Exporter 5.57 'import';
 our @EXPORT = qw/Build Build_PL/;
 
 use CPAN::Meta;
-use ExtUtils::BuildRC 0.003 qw/read_config/;
 use ExtUtils::Config 0.003;
-use ExtUtils::Helpers 0.010 qw/make_executable split_like_shell man1_pagename man3_pagename/;
+use ExtUtils::Helpers 0.016 qw/make_executable split_like_shell man1_pagename man3_pagename detildefy/;
 use ExtUtils::Install qw/pm_to_blib install/;
 use ExtUtils::InstallPaths 0.002;
 use File::Basename qw/dirname/;
-use File::Find::Rule qw/find/;
-use File::HomeDir;
 use File::Path qw/mkpath/;
 use File::Spec::Functions qw/catfile catdir rel2abs abs2rel/;
 use Getopt::Long qw/GetOptions/;
-use JSON 2 qw/encode_json decode_json/;
+use JSON::PP 2 qw/encode_json decode_json/;
+use Pod::Man;
 use TAP::Harness;
 
 sub write_file {
@@ -38,10 +36,6 @@ sub get_meta {
 	return CPAN::Meta->load_file($metafile);
 }
 
-sub detildefy {
-	$_[0] =~ s{ \A ~ ([^/]*) }{ length $1 ? File::HomeDir->users_home($1) : File::HomeDir->my_home }xe;
-}
-
 sub manify {
 	my ($input_file, $output_file, $section, $opts) = @_;
 	my $dirname = dirname($output_file);
@@ -51,13 +45,20 @@ sub manify {
 	return;
 }
 
+sub find {
+	my ($pattern, @dirs) = @_;
+	my @ret;
+	File::Find::find(sub { push @ret, $File::Find::name if -f $_ && $_ =~ $pattern }, @dirs);
+	return @ret;
+}
+
 my %actions = (
 	build => sub {
 		my %opt = @_;
-		system $^X, $_ and die "$_ returned $?\n" for find(file => name => '*.PL', in => 'lib');
-		my %modules = map { $_ => catfile('blib', $_) } find(file => name => [qw/*.pm *.pod/], in => 'lib');
-		my %scripts = map { $_ => catfile('blib', $_) } find(file => name => '*', in => 'script');
-		my %shared = map { $_ => catfile(qw/blib lib auto share dist/, $opt{meta}->name, abs2rel($_, 'share')) } find(file => name => '*', in => 'share');
+		system $^X, $_ and die "$_ returned $?\n" for find(qr/\.PL$/, 'lib');
+		my %modules = map { $_ => catfile('blib', $_) } find(qr/\.p(?:m|od)$/, 'lib');
+		my %scripts = -d 'script' ? map { $_ => catfile('blib', $_) } find(qr//, 'script') : ();
+		my %shared =  -d 'share' ? map { $_ => catfile(qw/blib lib auto share dist/, $opt{meta}->name, abs2rel($_, 'share')) } find(qr//, 'share') : ();
 		pm_to_blib({ %modules, %scripts, %shared }, catdir(qw/blib lib auto/));
 		make_executable($_) for values %scripts;
 		mkpath(catdir(qw/blib arch/), $opt{verbose});
@@ -71,7 +72,7 @@ my %actions = (
 		my %opt = @_;
 		die "Must run `./Build build` first\n" if not -d 'blib';
 		my $tester = TAP::Harness->new({verbosity => $opt{verbose}, lib => rel2abs(catdir(qw/blib lib/)), color => -t STDOUT});
-		$tester->runtests(sort +find(file => name => '*.t', in => 't'))->has_errors and exit 1;
+		$tester->runtests(sort +find(qr/\.t$/, 't'))->has_errors and exit 1;
 	},
 	install => sub {
 		my %opt = @_;
@@ -84,11 +85,10 @@ sub Build {
 	my $bpl = decode_json(read_file('_build_params', 'utf8'));
 	my $action = @ARGV && $ARGV[0] =~ /\A\w+\z/ ? shift @ARGV : 'build';
 	die "No such action '$action'\n" if not $actions{$action};
-	my $rc_opts = read_config();
 	my @env = defined $ENV{PERL_MB_OPT} ? split_like_shell($ENV{PERL_MB_OPT}) : ();
-	unshift @ARGV, map { @{$_} } grep { defined } $rc_opts->{'*'}, $bpl, $rc_opts->{$action}, \@env;
+	unshift @ARGV, map { @{$_} } $bpl, \@env;
 	GetOptions(\my %opt, qw/install_base=s install_path=s% installdirs=s destdir=s prefix=s config=s% uninst:1 verbose:1 dry_run:1/);
-	detildefy($_) for grep { defined } @opt{qw/install_base destdir prefix/}, values %{ $opt{install_path} };
+	$_ = detildefy($_) for grep { defined } @opt{qw/install_base destdir prefix/}, values %{ $opt{install_path} };
 	@opt{'config', 'meta'} = (ExtUtils::Config->new($opt{config}), get_meta());
 	$actions{$action}->(%opt, install_paths => ExtUtils::InstallPaths->new(%opt, dist_name => $opt{meta}->name));
 }
@@ -119,7 +119,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 

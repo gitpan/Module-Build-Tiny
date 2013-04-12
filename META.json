@@ -5,7 +5,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300031, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Dist::Zilla version 4.300033, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -19,18 +19,16 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "Exporter" : "5.57",
-            "ExtUtils::BuildRC" : "0.003",
             "ExtUtils::Config" : "0.003",
-            "ExtUtils::Helpers" : "0.010",
+            "ExtUtils::Helpers" : "0.016",
             "ExtUtils::Install" : "0",
             "ExtUtils::InstallPaths" : "0.002",
             "File::Basename" : "0",
-            "File::Find::Rule" : "0",
-            "File::HomeDir" : "0",
             "File::Path" : "0",
             "File::Spec::Functions" : "0",
             "Getopt::Long" : "0",
-            "JSON" : "2",
+            "JSON::PP" : "2",
+            "Pod::Man" : "0",
             "TAP::Harness" : "0",
             "perl" : "5.006",
             "strict" : "0",
@@ -46,18 +44,16 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "Exporter" : "5.57",
-            "ExtUtils::BuildRC" : "0.003",
             "ExtUtils::Config" : "0.003",
-            "ExtUtils::Helpers" : "0.010",
+            "ExtUtils::Helpers" : "0.016",
             "ExtUtils::Install" : "0",
             "ExtUtils::InstallPaths" : "0.002",
             "File::Basename" : "0",
-            "File::Find::Rule" : "0",
-            "File::HomeDir" : "0",
             "File::Path" : "0",
             "File::Spec::Functions" : "0",
             "Getopt::Long" : "0",
-            "JSON" : "2",
+            "JSON::PP" : "2",
+            "Pod::Man" : "0",
             "TAP::Harness" : "0",
             "perl" : "5.006",
             "strict" : "0",
@@ -65,9 +61,6 @@
          }
       },
       "test" : {
-         "recommends" : {
-            "File::ShareDir" : "1.000"
-         },
          "requires" : {
             "Carp" : "0",
             "Config" : "0",
@@ -76,11 +69,13 @@
             "File::Find" : "0",
             "File::Spec" : "0",
             "File::Temp" : "0",
-            "File::pushd" : "1.00",
             "IO::File" : "0",
             "IPC::Open2" : "0",
             "Test::More" : "0.88",
             "blib" : "0"
+         },
+         "suggests" : {
+            "File::ShareDir" : "1.000"
          }
       }
    },
@@ -96,6 +91,6 @@
          "web" : "http://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.014"
+   "version" : "0.015"
 }
 

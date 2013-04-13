@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.016';
+  $Module::Build::Tiny::VERSION = '0.017';
 }
 use strict;
 use warnings;
@@ -13,7 +13,7 @@ use ExtUtils::Helpers 0.016 qw/make_executable split_like_shell man1_pagename ma
 use ExtUtils::Install qw/pm_to_blib install/;
 use ExtUtils::InstallPaths 0.002;
 use File::Basename qw/dirname/;
-use File::Find;
+use File::Find ();
 use File::Path qw/mkpath/;
 use File::Spec::Functions qw/catfile catdir rel2abs abs2rel/;
 use Getopt::Long qw/GetOptions/;
@@ -120,7 +120,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.016
+version 0.017
 
 =head1 SYNOPSIS
 

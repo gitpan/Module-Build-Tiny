@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.017';
+  $Module::Build::Tiny::VERSION = '0.018';
 }
 use strict;
 use warnings;
@@ -9,7 +9,7 @@ our @EXPORT = qw/Build Build_PL/;
 
 use CPAN::Meta;
 use ExtUtils::Config 0.003;
-use ExtUtils::Helpers 0.016 qw/make_executable split_like_shell man1_pagename man3_pagename detildefy/;
+use ExtUtils::Helpers 0.019 qw/make_executable split_like_shell man1_pagename man3_pagename detildefy/;
 use ExtUtils::Install qw/pm_to_blib install/;
 use ExtUtils::InstallPaths 0.002;
 use File::Basename qw/dirname/;
@@ -18,8 +18,6 @@ use File::Path qw/mkpath/;
 use File::Spec::Functions qw/catfile catdir rel2abs abs2rel/;
 use Getopt::Long qw/GetOptions/;
 use JSON::PP 2 qw/encode_json decode_json/;
-use Pod::Man;
-use TAP::Harness;
 
 sub write_file {
 	my ($filename, $mode, $content) = @_;
@@ -39,8 +37,10 @@ sub get_meta {
 
 sub manify {
 	my ($input_file, $output_file, $section, $opts) = @_;
+	return if -e $output_file && -M $input_file <= -M $output_file;
 	my $dirname = dirname($output_file);
 	mkpath($dirname, $opts->{verbose}) if not -d $dirname;
+	require Pod::Man;
 	Pod::Man->new(section => $section)->parse_from_file($input_file, $output_file);
 	print "Manifying $output_file\n" if $opts->{verbose} && $opts->{verbose} > 0;
 	return;
@@ -72,6 +72,7 @@ my %actions = (
 	test => sub {
 		my %opt = @_;
 		die "Must run `./Build build` first\n" if not -d 'blib';
+		require TAP::Harness;
 		my $tester = TAP::Harness->new({verbosity => $opt{verbose}, lib => rel2abs(catdir(qw/blib lib/)), color => -t STDOUT});
 		$tester->runtests(sort +find(qr/\.t$/, 't'))->has_errors and exit 1;
 	},
@@ -120,7 +121,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.017
+version 0.018
 
 =head1 SYNOPSIS
 

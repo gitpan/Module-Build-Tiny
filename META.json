@@ -20,7 +20,7 @@
             "CPAN::Meta" : "0",
             "Exporter" : "5.57",
             "ExtUtils::Config" : "0.003",
-            "ExtUtils::Helpers" : "0.019",
+            "ExtUtils::Helpers" : "0.020",
             "ExtUtils::Install" : "0",
             "ExtUtils::InstallPaths" : "0.002",
             "File::Basename" : "0",
@@ -46,7 +46,7 @@
             "CPAN::Meta" : "0",
             "Exporter" : "5.57",
             "ExtUtils::Config" : "0.003",
-            "ExtUtils::Helpers" : "0.019",
+            "ExtUtils::Helpers" : "0.020",
             "ExtUtils::Install" : "0",
             "ExtUtils::InstallPaths" : "0.002",
             "File::Basename" : "0",
@@ -95,6 +95,6 @@
          "web" : "http://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.018"
+   "version" : "0.019"
 }
 

@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.019';
+  $Module::Build::Tiny::VERSION = '0.020';
 }
 use strict;
 use warnings;
@@ -89,7 +89,7 @@ sub Build {
 	die "No such action '$action'\n" if not $actions{$action};
 	my @env = defined $ENV{PERL_MB_OPT} ? split_like_shell($ENV{PERL_MB_OPT}) : ();
 	unshift @ARGV, map { @{$_} } $bpl, \@env;
-	GetOptions(\my %opt, qw/install_base=s install_path=s% installdirs=s destdir=s prefix=s config=s% uninst:1 verbose:1 dry_run:1 pureperl-only:1/);
+	GetOptions(\my %opt, qw/install_base=s install_path=s% installdirs=s destdir=s prefix=s config=s% uninst:1 verbose:1 dry_run:1 pureperl-only:1 create_packlist=i/);
 	$_ = detildefy($_) for grep { defined } @opt{qw/install_base destdir prefix/}, values %{ $opt{install_path} };
 	@opt{'config', 'meta'} = (ExtUtils::Config->new($opt{config}), get_meta());
 	$actions{$action}->(%opt, install_paths => ExtUtils::InstallPaths->new(%opt, dist_name => $opt{meta}->name));
@@ -98,8 +98,8 @@ sub Build {
 sub Build_PL {
 	my $meta = get_meta();
 	printf "Creating new 'Build' script for '%s' version '%s'\n", $meta->name, $meta->version;
-	my $dir = $meta->name eq 'Module-Build-Tiny' ? 'lib' : 'inc';
-	write_file('Build', 'raw', "#!perl\nuse lib '$dir';\nuse Module::Build::Tiny;\nBuild();\n");
+	my $dir = $meta->name eq 'Module-Build-Tiny' ? "use lib 'lib';" : '';
+	write_file('Build', 'raw', "#!perl\n$dir\nuse Module::Build::Tiny;\nBuild();\n");
 	make_executable('Build');
 	write_file('_build_params', 'utf8', encode_json(\@ARGV));
 	$meta->save(@$_) for ['MYMETA.json'], ['MYMETA.yml' => { version => 1.4 }];
@@ -113,6 +113,7 @@ sub Build_PL {
 # vi:et:sts=2:sw=2:ts=2
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -121,7 +122,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.019
+version 0.020
 
 =head1 SYNOPSIS
 
@@ -238,4 +239,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

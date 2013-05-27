@@ -19,10 +19,12 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "Exporter" : "5.57",
+            "ExtUtils::CBuilder" : "0",
             "ExtUtils::Config" : "0.003",
             "ExtUtils::Helpers" : "0.020",
             "ExtUtils::Install" : "0",
             "ExtUtils::InstallPaths" : "0.002",
+            "ExtUtils::ParseXS" : "0",
             "File::Basename" : "0",
             "File::Find" : "0",
             "File::Path" : "0",
@@ -45,10 +47,12 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "Exporter" : "5.57",
+            "ExtUtils::CBuilder" : "0",
             "ExtUtils::Config" : "0.003",
             "ExtUtils::Helpers" : "0.020",
             "ExtUtils::Install" : "0",
             "ExtUtils::InstallPaths" : "0.002",
+            "ExtUtils::ParseXS" : "0",
             "File::Basename" : "0",
             "File::Find" : "0",
             "File::Path" : "0",
@@ -76,6 +80,7 @@
             "IO::File" : "0",
             "IPC::Open2" : "0",
             "Test::More" : "0.88",
+            "XSLoader" : "0",
             "blib" : "0"
          },
          "suggests" : {
@@ -95,6 +100,6 @@
          "web" : "https://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.020"
+   "version" : "0.021"
 }
 

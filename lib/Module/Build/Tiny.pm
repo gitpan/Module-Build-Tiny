@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.021';
+  $Module::Build::Tiny::VERSION = '0.022';
 }
 use strict;
 use warnings;
@@ -49,7 +49,7 @@ sub manify {
 sub process_xs {
 	my ($source, $options) = @_;
 
-	my @dirnames = splitdir(abs2rel(dirname($source), 'lib'));
+	my (undef, @dirnames) = splitdir(dirname($source));
 	my $file_base = basename($source, '.xs');
 	my $archdir = catdir(qw/blib arch auto/, @dirnames, $file_base);
 
@@ -143,7 +143,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.021
+version 0.022
 
 =head1 SYNOPSIS
 

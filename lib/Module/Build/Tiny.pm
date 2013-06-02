@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.022';
+  $Module::Build::Tiny::VERSION = '0.023';
 }
 use strict;
 use warnings;
@@ -49,6 +49,7 @@ sub manify {
 sub process_xs {
 	my ($source, $options) = @_;
 
+	die "Can't build xs files under --pureperl-only\n" if $options->{'pureperl-only'};
 	my (undef, @dirnames) = splitdir(dirname($source));
 	my $file_base = basename($source, '.xs');
 	my $archdir = catdir(qw/blib arch auto/, @dirnames, $file_base);
@@ -143,7 +144,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.022
+version 0.023
 
 =head1 SYNOPSIS
 

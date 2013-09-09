@@ -35,13 +35,17 @@ configure_requires:
   perl: 5.006
   strict: 0
   warnings: 0
+conflicts:
+  local::lib: '< 1.006008'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Module-Build-Tiny
+recommends:
+  TAP::Harness: 3.28
 requires:
   CPAN::Meta: 0
   Exporter: 5.57
@@ -65,4 +69,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.026
+version: 0.027

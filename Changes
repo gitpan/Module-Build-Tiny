@@ -1,5 +1,8 @@
 Revision history for Module::Build::Tiny
 
+0.027     2013-09-09 11:43:12 Europe/Amsterdam
+          Various documentation updates
+
 0.026     2013-08-19 22:09:00 Europe/Amsterdam
           Safe PERL_MB_OPT during configuration stage
 

@@ -10,7 +10,9 @@ build_requires:
   File::Spec: 0
   File::Temp: 0
   IO::File: 0
+  IO::Handle: 0
   IPC::Open2: 0
+  IPC::Open3: 0
   Test::More: 0.88
   XSLoader: 0
   blib: 0
@@ -38,7 +40,7 @@ configure_requires:
 conflicts:
   local::lib: '< 1.006008'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140'
+generated_by: 'Dist::Zilla version 4.300038, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -69,4 +71,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.027
+version: 0.028

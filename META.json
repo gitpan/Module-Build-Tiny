@@ -32,7 +32,8 @@
             "Getopt::Long" : "0",
             "JSON::PP" : "2",
             "Pod::Man" : "0",
-            "TAP::Harness" : "0",
+            "TAP::Harness" : "3.29",
+            "TAP::Harness::Env" : "0",
             "perl" : "5.006",
             "strict" : "0",
             "warnings" : "0"
@@ -46,9 +47,6 @@
       "runtime" : {
          "conflicts" : {
             "local::lib" : "< 1.006008"
-         },
-         "recommends" : {
-            "TAP::Harness" : "3.28"
          },
          "requires" : {
             "CPAN::Meta" : "0",
@@ -66,7 +64,8 @@
             "Getopt::Long" : "0",
             "JSON::PP" : "2",
             "Pod::Man" : "0",
-            "TAP::Harness" : "0",
+            "TAP::Harness" : "3.29",
+            "TAP::Harness::Env" : "0",
             "perl" : "5.006",
             "strict" : "0",
             "warnings" : "0"
@@ -96,6 +95,12 @@
          }
       }
    },
+   "provides" : {
+      "Module::Build::Tiny" : {
+         "file" : "lib/Module/Build/Tiny.pm",
+         "version" : "0.029"
+      }
+   },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
@@ -108,6 +113,6 @@
          "web" : "https://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.028"
+   "version" : "0.029"
 }
 

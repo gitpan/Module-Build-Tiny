@@ -1,6 +1,6 @@
 package Module::Build::Tiny;
 {
-  $Module::Build::Tiny::VERSION = '0.029';
+  $Module::Build::Tiny::VERSION = '0.030';
 }
 use strict;
 use warnings;
@@ -63,7 +63,7 @@ sub process_xs {
 	my $version = $options->{meta}->version;
 	require ExtUtils::CBuilder;
 	my $builder = ExtUtils::CBuilder->new(config => $options->{config}->values_set);
-	my $ob_file = $builder->compile(source => $c_file, defines => { VERSION => qq/"$version"/, XS_VERSION => qq/"$version"/ }, include_dirs => curdir);
+	my $ob_file = $builder->compile(source => $c_file, defines => { VERSION => qq/"$version"/, XS_VERSION => qq/"$version"/ }, include_dirs => [ curdir ]);
 
 	mkpath($archdir, $options->{verbose}, oct '755') unless -d $archdir;
 	my $lib_file = catfile($archdir, "$file_base." . $options->{config}->get('dlext'));
@@ -156,7 +156,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.029
+version 0.030
 
 =head1 SYNOPSIS
 

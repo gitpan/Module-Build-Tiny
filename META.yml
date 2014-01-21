@@ -31,7 +31,7 @@ configure_requires:
   File::Find: 0
   File::Path: 0
   File::Spec::Functions: 0
-  Getopt::Long: 0
+  Getopt::Long: 2.36
   JSON::PP: 2
   Pod::Man: 0
   TAP::Harness::Env: 0
@@ -50,7 +50,7 @@ name: Module-Build-Tiny
 provides:
   Module::Build::Tiny:
     file: lib/Module/Build/Tiny.pm
-    version: 0.032
+    version: 0.033
 requires:
   CPAN::Meta: 0
   DynaLoader: 0
@@ -65,7 +65,7 @@ requires:
   File::Find: 0
   File::Path: 0
   File::Spec::Functions: 0
-  Getopt::Long: 0
+  Getopt::Long: 2.36
   JSON::PP: 2
   Pod::Man: 0
   TAP::Harness::Env: 0
@@ -75,4 +75,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.032
+version: 0.033

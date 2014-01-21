@@ -1,5 +1,5 @@
 package Module::Build::Tiny;
-$Module::Build::Tiny::VERSION = '0.032';
+$Module::Build::Tiny::VERSION = '0.033';
 use strict;
 use warnings;
 use Exporter 5.57 'import';
@@ -14,7 +14,7 @@ use File::Basename qw/basename dirname/;
 use File::Find ();
 use File::Path qw/mkpath rmtree/;
 use File::Spec::Functions qw/catfile catdir rel2abs abs2rel splitdir curdir/;
-use Getopt::Long qw/GetOptionsFromArray/;
+use Getopt::Long 2.36 qw/GetOptionsFromArray/;
 use JSON::PP 2 qw/encode_json decode_json/;
 
 sub write_file {
@@ -160,7 +160,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.032
+version 0.033
 
 =head1 SYNOPSIS
 

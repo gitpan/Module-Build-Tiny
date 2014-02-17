@@ -50,7 +50,7 @@ name: Module-Build-Tiny
 provides:
   Module::Build::Tiny:
     file: lib/Module/Build/Tiny.pm
-    version: 0.034
+    version: 0.035
 requires:
   CPAN::Meta: 0
   DynaLoader: 0
@@ -75,4 +75,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: 0.034
+version: 0.035

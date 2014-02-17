@@ -98,7 +98,7 @@
    "provides" : {
       "Module::Build::Tiny" : {
          "file" : "lib/Module/Build/Tiny.pm",
-         "version" : "0.034"
+         "version" : "0.035"
       }
    },
    "release_status" : "stable",
@@ -113,6 +113,6 @@
          "web" : "https://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.034"
+   "version" : "0.035"
 }
 

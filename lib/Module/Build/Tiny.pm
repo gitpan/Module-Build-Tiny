@@ -1,5 +1,5 @@
 package Module::Build::Tiny;
-$Module::Build::Tiny::VERSION = '0.035';
+$Module::Build::Tiny::VERSION = '0.036';
 use strict;
 use warnings;
 use Exporter 5.57 'import';
@@ -61,7 +61,7 @@ sub process_xs {
 	my $version = $options->{meta}->version;
 	require ExtUtils::CBuilder;
 	my $builder = ExtUtils::CBuilder->new(config => $options->{config}->values_set);
-	my $ob_file = $builder->compile(source => $c_file, defines => { VERSION => qq/"$version"/, XS_VERSION => qq/"$version"/ }, include_dirs => [ curdir ]);
+	my $ob_file = $builder->compile(source => $c_file, defines => { VERSION => qq/"$version"/, XS_VERSION => qq/"$version"/ }, include_dirs => [ curdir, dirname($source) ]);
 
 	require DynaLoader;
 	my $mod2fname = defined &DynaLoader::mod2fname ? \&DynaLoader::mod2fname : sub { return $_[0][-1] };
@@ -101,7 +101,13 @@ my %actions = (
 		my %opt = @_;
 		die "Must run `./Build build` first\n" if not -d 'blib';
 		require TAP::Harness::Env;
-		my $tester = TAP::Harness::Env->create({ verbosity => $opt{verbose}, lib => [ map { rel2abs(catdir(qw/blib/, $_)) } qw/arch lib/ ], color => -t STDOUT });
+		my %test_args = (
+			(verbosity => $opt{verbose}) x!! exists $opt{verbose},
+			(jobs => $opt{jobs}) x!! exists $opt{jobs},
+			(color => 1) x !!-t STDOUT,
+			lib => [ map { rel2abs(catdir(qw/blib/, $_)) } qw/arch lib/ ],
+		);
+		my $tester = TAP::Harness::Env->create(\%test_args);
 		$tester->runtests(sort +find(qr/\.t$/, 't'))->has_errors and exit 1;
 	},
 	install => sub {
@@ -124,7 +130,7 @@ sub Build {
 	die "No such action '$action'\n" if not $actions{$action};
 	my($env, $bargv) = @{ decode_json(read_file('_build_params')) };
 	my %opt;
-	GetOptionsFromArray($_, \%opt, qw/install_base=s install_path=s% installdirs=s destdir=s prefix=s config=s% uninst:1 verbose:1 dry_run:1 pureperl-only:1 create_packlist=i/) for ($env, $bargv, \@ARGV);
+	GetOptionsFromArray($_, \%opt, qw/install_base=s install_path=s% installdirs=s destdir=s prefix=s config=s% uninst:1 verbose:1 dry_run:1 pureperl-only:1 create_packlist=i jobs=i/) for ($env, $bargv, \@ARGV);
 	$_ = detildefy($_) for grep { defined } @opt{qw/install_base destdir prefix/}, values %{ $opt{install_path} };
 	@opt{ 'config', 'meta' } = (ExtUtils::Config->new($opt{config}), get_meta());
 	$actions{$action}->(%opt, install_paths => ExtUtils::InstallPaths->new(%opt, dist_name => $opt{meta}->name));
@@ -160,7 +166,7 @@ Module::Build::Tiny - A tiny replacement for Module::Build
 
 =head1 VERSION
 
-version 0.035
+version 0.036
 
 =head1 SYNOPSIS
 

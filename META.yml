@@ -42,7 +42,7 @@ configure_requires:
 conflicts:
   local::lib: '< 1.006008'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.140640'
+generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.142060'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -51,7 +51,7 @@ name: Module-Build-Tiny
 provides:
   Module::Build::Tiny:
     file: lib/Module/Build/Tiny.pm
-    version: '0.037'
+    version: '0.038'
 requires:
   CPAN::Meta: '0'
   DynaLoader: '0'
@@ -76,4 +76,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Module-Build-Tiny
   repository: git://github.com/Leont/module-build-tiny.git
-version: '0.037'
+version: '0.038'

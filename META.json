@@ -5,7 +5,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.140640",
+   "generated_by" : "Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.142060",
    "license" : [
       "perl_5"
    ],
@@ -99,7 +99,7 @@
    "provides" : {
       "Module::Build::Tiny" : {
          "file" : "lib/Module/Build/Tiny.pm",
-         "version" : "0.037"
+         "version" : "0.038"
       }
    },
    "release_status" : "stable",
@@ -114,6 +114,6 @@
          "web" : "https://github.com/Leont/module-build-tiny"
       }
    },
-   "version" : "0.037"
+   "version" : "0.038"
 }
 
